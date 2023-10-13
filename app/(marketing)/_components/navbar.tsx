@@ -6,15 +6,19 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import Logo from "./logo";
 import { ModeToggle } from "@/components/mode-toggle";
-import { SignInButton, UserButton } from "@clerk/clerk-react";
+import { SignInButton, UserButton, useAuth } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/spinner";
 import Link from "next/link";
-
+import { useUser } from "@clerk/clerk-react";
 const Navbar = () => {
-  const scrolled = useScrollTop();
   const { isAuthenticated, isLoading } = useConvexAuth();
-  console.log(isAuthenticated);
+  const { isLoaded, userId, sessionId, getToken } = useAuth();
+  const { user } = useUser();
+  console.log("user:", user);
+  // console.log(isLoaded, userId);
+  const scrolled = useScrollTop();
+  // console.log(isAuthenticated, isLoading);
   return (
     <div
       className={cn(
@@ -23,7 +27,7 @@ const Navbar = () => {
       )}
     >
       <Logo />
-      <div className="flex md:ml-auto md:justify-end justify-between w-full items-center gap-x-2">
+      <div className="md:ml-auto md:justify-end justify-between w-full flex items-center gap-x-2">
         {isLoading && <Spinner />}
         {!isAuthenticated && !isLoading && (
           <>
