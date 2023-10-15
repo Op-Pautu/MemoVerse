@@ -12,7 +12,6 @@ export const get = query({
         }
 
         const documents = await ctx.db.query("documents").collect()
-
         return documents
     }
 })
@@ -36,7 +35,7 @@ export const create = mutation({
             parentDocument: args.parentDocument,
             userId,
             isArchived: false,
-            isPublished: false
+            isPublished: false,
         })
 
         return document
